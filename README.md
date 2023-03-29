@@ -1,2 +1,4 @@
+Imersão JAVA da alura
 # Api-ImDb
-Primeiro teste com API'S do java
+Testes de Api's (ImDb)
+Criação de stickers para o Whatsapp
