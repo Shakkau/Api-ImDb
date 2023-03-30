@@ -2,6 +2,8 @@ package Systeminic;
 
 import JsonParser.*;
 import Stickers.StickerMachine;
+
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -16,8 +18,7 @@ import java.util.Map;
 public class PrimeiroTeste {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
-		// API do HTTP, get and request = buscar na api do google e devolver o body em
-		// forma de String
+		// API do HTTP, get and request = buscar na api do google e devolver o body em forma de String
 		String color = "\u001b[38;5;246m", re_color = "\u001b[m";
 		String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
 		URI endereco = URI.create(url);
@@ -33,11 +34,17 @@ public class PrimeiroTeste {
 
 		// exibição de dados
 		var sm = new StickerMachine();
+		var diretorio = new File("saida/");
 		
-		for (Map<String, String> filme : listaDeFilmes) {
+		diretorio.mkdir();
+		
+		for (int i = 0; i < 5; i++) {
+			var filme = listaDeFilmes.get(i);
+		
 			String urlTitle = filme.get("title");
 			String urlImage = filme.get("image");
-			String nomeArq = urlTitle + ".png";
+			String urlRating = filme.get("imDbRating");
+			String nomeArq = "saida/" + urlTitle + ".png";
 			
 			InputStream inputURL = new URL(urlImage).openStream();
 			
@@ -45,10 +52,9 @@ public class PrimeiroTeste {
 
 			System.out.println(color + "Title: " + re_color + urlTitle);
 			System.out.println(color + "Poster: " + re_color + urlImage);
-			System.out.println(color + "Rating: " + re_color + filme.get("imDbRating"));
+			System.out.println(color + "Rating: " + re_color + urlRating);
 			System.out.println("");
 		}
-
 	}
 
 }
