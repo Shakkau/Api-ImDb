@@ -1,8 +1,11 @@
 package Systeminic;
 
 import JsonParser.*;
+import Stickers.StickerMachine;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -29,9 +32,19 @@ public class PrimeiroTeste {
 		List<Map<String, String>> listaDeFilmes = parser.parse(body);
 
 		// exibição de dados
+		var sm = new StickerMachine();
+		
 		for (Map<String, String> filme : listaDeFilmes) {
-			System.out.println(color + "Title: " + re_color + filme.get("title"));
-			System.out.println(color + "Poster: " + re_color + filme.get("image"));
+			String urlTitle = filme.get("title");
+			String urlImage = filme.get("image");
+			String nomeArq = urlTitle + ".png";
+			
+			InputStream inputURL = new URL(urlImage).openStream();
+			
+			sm.create(inputURL, nomeArq);
+
+			System.out.println(color + "Title: " + re_color + urlTitle);
+			System.out.println(color + "Poster: " + re_color + urlImage);
 			System.out.println(color + "Rating: " + re_color + filme.get("imDbRating"));
 			System.out.println("");
 		}
